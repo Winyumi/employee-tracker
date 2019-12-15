@@ -1,0 +1,25 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Winyumi/employee-tracker.git"
+  },
+  "author": "Winson Quon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Winyumi/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/Winyumi/employee-tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.0.0",
+    "mysql": "^2.17.1"
+  }
+}
