@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const table = require('console.table');
 
-const query = require('./lib/queries');
+const query = require('./lib/query');
 
 query.viewDepartments();
 query.viewRoles();
