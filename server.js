@@ -2,11 +2,34 @@ const inquirer = require('inquirer');
 const table = require('console.table');
 
 const query = require('./lib/query');
+const questions = require('./lib/questions');
 
+async function init() {
+    let { main } = await inquirer.prompt(questions.main);
+    let data;
+    switch (main) {
+        case 'View departments':
+            data = await query.viewDepartments();
+            console.table(data);
+            return init();
+        case 'View roles':
+            data = await query.viewRoles();
+            console.table(data);
+            return init();
+        case 'View employees':
+            data = await query.viewEmployees();
+            console.table(data);
+            return init();
+    }
+};
+
+init();
+
+/*
 query.viewDepartments();
 query.viewRoles();
 query.viewEmployees();
-
+*/
 /*
 1. if database does not exist, source schema.sql
 
