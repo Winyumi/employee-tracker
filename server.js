@@ -67,10 +67,9 @@ async function init() {
             return init();
 
         case 'Add employee':
-            // Populate choices with list of roles
+            // Populate choices with list of roles and employees for manager select
             list = []; for (let r of roles) list.push(r.title);
             questions.addEmployee.find(e => e.name === "role").choices = list;
-            // Populate choices with list of employees for manager select
             list = ['None']; for (let e of employees) list.push(e.first_name + " " + e.last_name);
             questions.addEmployee.find(e => e.name === "manager").choices = list;
             // Ask questions
@@ -89,10 +88,9 @@ async function init() {
             return init();
 
         case 'Update employee role':
-            // Populate choices with list of employees
+            // Populate choices with list of employees and roles
             list = []; for (let e of employees) list.push(e.first_name + " " + e.last_name);
             questions.updateEmployeeRole.find(e => e.name === "employee").choices = list;
-            // Populate choices with list of roles
             list = []; for (let r of roles) list.push(r.title);
             questions.updateEmployeeRole.find(e => e.name === "role").choices = list;
             // Ask questions
