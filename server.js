@@ -44,6 +44,68 @@ async function init() {
             return init();
 
         case 'Add role':
+            // Populate choices with list of departments
+            list = []; for (let d of departments) list.push(d.name);
+            questions.addRole.find(e => e.name == "department").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.addRole);
+            // Run query
+            if (data.confirm) {
+                // Get department id
+                data.department_id = (await query.getDepartmentByName(data.department))[0].id;
+                await query.addRole(data.title, data.salary, data.department_id);
+                console.log(`Role "${data.title}" added.`);
+            }
+            return init();
+
+        case 'Add employee':
+            // Populate choices with list of roles
+            list = []; for (let r of roles) list.push(r.title);
+            questions.addEmployee.find(e => e.name == "role").choices = list;
+            // Populate choices with list of employees for manager select
+            list = ['None']; for (let e of employees) list.push(e.first_name + " " + e.last_name);
+            questions.addEmployee.find(e => e.name == "manager").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.addEmployee);
+            // Run query
+            if (data.confirm) {
+                // Get role id
+                data.role_id = (await query.getRoleByTitle(data.role))[0].id;
+                if (data.manager != 'None') {
+                    // Get manager id
+                    data.manager_id = (await query.getEmployeeByFullName(data.manager))[0].id;
+                    // Run query
+                    await query.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id);
+                } else {
+                    // Run query
+                    await query.addEmployee(data.first_name, data.last_name, data.role_id);
+                }
+                console.log(`Employee "${data.first_name} ${data.last_name}" added.`);
+            }
+            return init();
+
+        case 'Update role':
+            // Populate choices with list of employees
+            list = []; for (let e of employees) list.push(e.first_name + " " + e.last_name);
+            questions.updateEmployeeRole.find(e => e.name == "employee").choices = list;
+            // Populate choices with list of roles
+            list = []; for (let r of roles) list.push(r.title);
+            questions.updateEmployeeRole.find(e => e.name == "role").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.updateEmployeeRole);
+            if (data.confirm) {
+                // Get employee id
+                data.employee_id = (await query.getEmployeeByFullName(data.employee))[0].id;
+                // Get role id
+                data.role_id = (await query.getRoleByTitle(data.role))[0].id;
+                // Run query
+                await query.updateEmployeeRole(data.employee_id, data.role_id);
+                console.log(`Employee "${data.employee}" updated.`);
+            }
+            return init();
+
+        /*
+        case 'Add role by ID':
             data = await inquirer.prompt(questions.addRole);
             if (data.confirm) {
                 if (data.department_id > departments.length) {
@@ -55,7 +117,7 @@ async function init() {
             }
             return init();
 
-        case 'Add employee':
+        case 'Add employee by ID':
             data = await inquirer.prompt(questions.addEmployee);
             if (data.confirm) {
                 if (data.role_id > roles.length) {
@@ -74,22 +136,7 @@ async function init() {
                 console.log(`Employee "${data.first_name} ${data.last_name}" added.`);
             }
             return init();
-
-        case 'Update role':
-            data = await inquirer.prompt(questions.updateEmployeeRole);
-            if (data.confirm) {
-                if (data.employee_id > employees.length) {
-                    console.error(`Employee ${data.employee_id} not found.`);
-                    return init();
-                }
-                if (data.role_id > roles.length) {
-                    console.error('Role id out of range. Employee was not changed.');
-                    return init();
-                }
-                await query.updateEmployeeRole(data.employee_id, data.role_id);
-                console.log(`Employee ${data.employee_id} updated.`);
-            }
-            return init();
+        */
 
     }
 };
