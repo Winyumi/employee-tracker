@@ -14,11 +14,13 @@ console.log(`
 
 async function init() {
     console.log('');
-    let departments = await query.viewDepartments();
-    let roles = await query.viewRoles();
-    let employees = await query.viewEmployees();
-    let { main } = await inquirer.prompt(questions.main);
-    let data;
+
+    let departments = await query.viewDepartments(),
+        roles = await query.viewRoles(),
+        employees = await query.viewEmployees(),
+        { main } = await inquirer.prompt(questions.main),
+        data, list = [];
+
     switch (main) {
 
         case 'View departments':
