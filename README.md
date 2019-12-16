@@ -1,1 +1,3 @@
-# employee-tracker
+# Employee Manager
+
+Readme coming soon.
