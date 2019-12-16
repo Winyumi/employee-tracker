@@ -4,6 +4,14 @@ const table = require('console.table');
 const query = require('./lib/query');
 const questions = require('./lib/questions');
 
+console.log(`
++-------------------------------------------+
+|                                           |
+|      E M P L O Y E E   M A N A G E R      |
+|                                           |
++-------------------------------------------+
+`)
+
 async function init() {
     console.log('');
     let departments = await query.viewDepartments();
