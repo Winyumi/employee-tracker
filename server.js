@@ -46,7 +46,7 @@ async function init() {
         case 'Add role':
             // Populate choices with list of departments
             list = []; for (let d of departments) list.push(d.name);
-            questions.addRole.find(e => e.name == "department").choices = list;
+            questions.addRole.find(e => e.name === "department").choices = list;
             // Ask questions
             data = await inquirer.prompt(questions.addRole);
             // Run query
@@ -61,10 +61,10 @@ async function init() {
         case 'Add employee':
             // Populate choices with list of roles
             list = []; for (let r of roles) list.push(r.title);
-            questions.addEmployee.find(e => e.name == "role").choices = list;
+            questions.addEmployee.find(e => e.name === "role").choices = list;
             // Populate choices with list of employees for manager select
             list = ['None']; for (let e of employees) list.push(e.first_name + " " + e.last_name);
-            questions.addEmployee.find(e => e.name == "manager").choices = list;
+            questions.addEmployee.find(e => e.name === "manager").choices = list;
             // Ask questions
             data = await inquirer.prompt(questions.addEmployee);
             // Run query
@@ -84,10 +84,10 @@ async function init() {
         case 'Update role':
             // Populate choices with list of employees
             list = []; for (let e of employees) list.push(e.first_name + " " + e.last_name);
-            questions.updateEmployeeRole.find(e => e.name == "employee").choices = list;
+            questions.updateEmployeeRole.find(e => e.name === "employee").choices = list;
             // Populate choices with list of roles
             list = []; for (let r of roles) list.push(r.title);
-            questions.updateEmployeeRole.find(e => e.name == "role").choices = list;
+            questions.updateEmployeeRole.find(e => e.name === "role").choices = list;
             // Ask questions
             data = await inquirer.prompt(questions.updateEmployeeRole);
             if (data.confirm) {
