@@ -27,6 +27,10 @@ async function init() {
             console.table(await query.viewDepartments());
             return init();
 
+        case 'View departments\' total utilized budgets':
+            console.table(await query.viewDepartmentsTotalBudget());
+            return init();
+
         case 'View roles':
             console.table(await query.viewRoles());
             return init();
