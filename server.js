@@ -107,6 +107,27 @@ async function init() {
             }
             return init();
 
+        case 'Update employee manager':
+            // Populate choices with list of employees
+            list = []; for (let e of employees) list.push(e.first_name + " " + e.last_name);
+            questions.updateEmployeeManager.find(e => e.name === "employee").choices = list;
+            list = ['None']; for (let e of employees) list.push(e.first_name + " " + e.last_name);
+            questions.updateEmployeeManager.find(e => e.name === "manager").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.updateEmployeeManager);
+            if (data.confirm) {
+                // Get employee and role ids
+                data.employee_id = employees.find(e => e.first_name + " " + e.last_name === data.employee).id;
+                data.manager === 'None' ?
+                    data.manager_id = null :
+                    data.manager_id = employees.find(e => e.first_name + " " + e.last_name === data.manager).id;
+                if (data.employee_id === data.manager_id) data.manager_id = null;
+                // Run query
+                await query.updateEmployeeManager(data.employee_id, data.manager_id);
+                console.log(`Employee "${data.employee}" updated.`);
+            }
+            return init();
+
         /*
         case 'Add role by ID':
             data = await inquirer.prompt(questions.addRole);
