@@ -126,6 +126,63 @@ async function init() {
             }
             return init();
 
+        case 'Remove department':
+            // Populate choices with list of departments
+            list = []; for (let d of departments) list.push(d.name);
+            questions.removeDepartment.find(e => e.name === "department").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.removeDepartment);
+            if (data.confirm) {
+                // Get department id
+                data.department_id = departments.find(e => e.name === data.department).id;
+                // Run query
+                try {
+                    await query.removeDepartment(data.department_id);
+                    console.log(`Department "${data.department}" removed.`);
+                } catch(err) {
+                    console.error(`Unable to remove department "${data.department}". There are roles still assigned to it.`);
+                }
+            }
+            return init();
+
+        case 'Remove role':
+            // Populate choices with list of roles
+            list = []; for (let r of roles) list.push(r.title);
+            questions.removeRole.find(e => e.name === "role").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.removeRole);
+            if (data.confirm) {
+                // Get role id
+                data.role_id = roles.find(e => e.title === data.role).id;
+                // Run query
+                try {
+                    await query.removeRole(data.role_id);
+                    console.log(`Role "${data.role}" removed.`);
+                } catch(err) {
+                    console.error(`Unable to remove role "${data.role}". There are employees still assigned to it.`);
+                }
+            }
+            return init();
+
+        case 'Remove employee':
+            // Populate choices with list of employees
+            list = []; for (let e of employees) list.push(e.first_name + " " + e.last_name);
+            questions.removeEmployee.find(e => e.name === "employee").choices = list;
+            // Ask questions
+            data = await inquirer.prompt(questions.removeEmployee);
+            if (data.confirm) {
+                // Get employee id
+                data.employee_id = employees.find(e => e.first_name + " " + e.last_name === data.employee).id;
+                // Run query
+                try {
+                    await query.removeEmployee(data.employee_id);
+                    console.log(`Employee "${data.employee}" removed.`);
+                } catch(err) {
+                    console.error(`Unable to remove employee "${data.employee}". This employee is currently assigned as manager to other employees.`);
+                }
+            }
+            return init();
+
         /*
         case 'Add role by ID':
             data = await inquirer.prompt(questions.addRole);
