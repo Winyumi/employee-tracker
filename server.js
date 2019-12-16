@@ -69,9 +69,8 @@ async function init() {
             data = await inquirer.prompt(questions.addEmployee);
             // Run query
             if (data.confirm) {
-                // Get role id
+                // Get role and manager ids
                 data.role_id = roles.find(e => e.title === data.role).id;
-                // Get manager id
                 data.manager === 'None' ?
                     data.manager_id = null :
                     data.manager_id = employees.find(e => e.first_name + " " + e.last_name === data.manager).id;
@@ -91,9 +90,8 @@ async function init() {
             // Ask questions
             data = await inquirer.prompt(questions.updateEmployeeRole);
             if (data.confirm) {
-                // Get employee id
+                // Get employee and role ids
                 data.employee_id = employees.find(e => e.first_name + " " + e.last_name === data.employee).id;
-                // Get role id
                 data.role_id = roles.find(e => e.title === data.role).id;
                 // Run query
                 await query.updateEmployeeRole(data.employee_id, data.role_id);
