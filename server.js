@@ -52,7 +52,7 @@ async function init() {
             // Run query
             if (data.confirm) {
                 // Get department id
-                data.department_id = (await query.getDepartmentByName(data.department))[0].id;
+                data.department_id = departments.find(e => e.name === data.department).id;
                 await query.addRole(data.title, data.salary, data.department_id);
                 console.log(`Role "${data.title}" added.`);
             }
@@ -70,16 +70,13 @@ async function init() {
             // Run query
             if (data.confirm) {
                 // Get role id
-                data.role_id = (await query.getRoleByTitle(data.role))[0].id;
-                if (data.manager != 'None') {
-                    // Get manager id
-                    data.manager_id = (await query.getEmployeeByFullName(data.manager))[0].id;
-                    // Run query
-                    await query.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id);
-                } else {
-                    // Run query
-                    await query.addEmployee(data.first_name, data.last_name, data.role_id);
-                }
+                data.role_id = roles.find(e => e.title === data.role).id;
+                // Get manager id
+                data.manager === 'None' ?
+                    data.manager_id = null :
+                    data.manager_id = employees.find(e => e.first_name + " " + e.last_name === data.manager).id;
+                // Run query
+                await query.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id);
                 console.log(`Employee "${data.first_name} ${data.last_name}" added.`);
             }
             return init();
@@ -95,9 +92,9 @@ async function init() {
             data = await inquirer.prompt(questions.updateEmployeeRole);
             if (data.confirm) {
                 // Get employee id
-                data.employee_id = (await query.getEmployeeByFullName(data.employee))[0].id;
+                data.employee_id = employees.find(e => e.first_name + " " + e.last_name === data.employee).id;
                 // Get role id
-                data.role_id = (await query.getRoleByTitle(data.role))[0].id;
+                data.role_id = roles.find(e => e.title === data.role).id;
                 // Run query
                 await query.updateEmployeeRole(data.employee_id, data.role_id);
                 console.log(`Employee "${data.employee}" updated.`);
