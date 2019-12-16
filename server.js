@@ -88,7 +88,7 @@ async function init() {
             }
             return init();
 
-        case 'Update role':
+        case 'Update employee role':
             // Populate choices with list of employees
             list = []; for (let e of employees) list.push(e.first_name + " " + e.last_name);
             questions.updateEmployeeRole.find(e => e.name === "employee").choices = list;
