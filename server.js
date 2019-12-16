@@ -35,6 +35,14 @@ async function init() {
             console.table(await query.viewEmployees());
             return init();
 
+        case 'View employees by department':
+            console.table(await query.viewEmployeesByDepartment());
+            return init();
+
+        case 'View employees by manager':
+            console.table(await query.viewEmployeesByManager());
+            return init();
+
         case 'Add department':
             data = await inquirer.prompt(questions.addDepartment);
             if (data.confirm) {
