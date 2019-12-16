@@ -12,6 +12,7 @@ Managing the employees in a company does not come easy as the company grows larg
 2. In your MySQL client, log into your MySQL server.
 3. Run the SQL query file `./db/schema.sql` to initialize the `employee_db` database. (Optional: Run `./db/seeds.sql` for sample data.)
 4. In your terminal, browse to the folder and run `npm install --production`.
+5. Edit the `./lib/env.js` file with your own credentials so the app can connect to your MySQL server.
 
 ## Usage
 
