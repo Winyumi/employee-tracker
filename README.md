@@ -22,4 +22,4 @@ Managing the employees in a company does not come easy as the company grows larg
 
 ## Preview
 
-Coming soon
+![Employee Tracker](readme_assets/preview.gif)
