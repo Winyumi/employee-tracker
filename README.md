@@ -6,7 +6,7 @@ Managing the employees in a company does not come easy as the company grows larg
 
 ## Installation
 
-**Note.js v13+** and **MySQL v8+** is required in order to run this script.
+**Note.js v13+** and **MySQL v8+** are required in order to run this script.
 
 1. Download or clone this repository into your local computer.
 2. In your MySQL client, log into your MySQL server.
